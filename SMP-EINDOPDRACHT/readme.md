@@ -10,7 +10,32 @@ To use the network analyzer, follow the steps below:
 
 2. Install the required dependencies by running the following command:
 
-- pip install -r requirements.txt
+    pip install -r requirements.txt
+
+3. Prepare your dataset file in JSON format. Make sure the file is accessible and contains the necessary network data for analysis.
+
+4. Run the network analyzer script with the desired options. Use the following command-line arguments:
+
+    python network_analyzer.py -ds <dataset_file> [options]
+
+
+Replace `<dataset_file>` with the path to your dataset file.
+
+Available options:
+- `-mr, --most-requests`: Perform analysis of most requests.
+- `-aoh, --amount-of-hosts`: Perform analysis of the amount of hosts.
+- `-uni <university_network_ip>`: Specify the university network IP address for the amount of hosts analysis.
+- `-ss, --synflood-scan`: Perform analysis of SYN flood scan.
+
+You can choose one or more options to run multiple analyses simultaneously.
+
+5. The network analyzer will process the dataset and display the results based on the selected options.
+
+## Examples
+
+1. Perform the most requests analysis:
+
+
 
 
 
