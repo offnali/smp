@@ -10,6 +10,8 @@ To use the network analyzer, follow the steps below:
 
 2. Install the required dependencies by running the following command:
 
+- pip install -r requirements.txt
+
 
 
 
