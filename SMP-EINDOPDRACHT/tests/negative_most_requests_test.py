@@ -14,7 +14,13 @@ def test_most_requests():
         {"_source": {"layers": {"frame": {"frame.time": "Jan  5, 1970 03:48:31.957082000 W. Europe Standard Time"}}}},
     ]
 
-    print(most_requests(data))
+    expected_result = [
+        "The 10 most requested times:",
+        "Time: Jan  5, 1970 03:23:09, Count: 2",
+        "Time: Jan  5, 1970 03:23:12, Count: 2",
+        "Time: Jan  5, 1970 03:48:31, Count: 3"
+    ]
 
-test_most_requests()
+    result = most_requests(data)
 
+    assert result == expected_result

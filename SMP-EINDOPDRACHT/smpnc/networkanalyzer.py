@@ -88,7 +88,7 @@ def main(dataset, options, university_network_ip):
         print()
         print("**Most Requests Scan**")
         result = most_requests(data)
-        print('\n'.join(result))  # Join the list elements with newline characters
+        print('\n'.join(result))
         print()
 
 
