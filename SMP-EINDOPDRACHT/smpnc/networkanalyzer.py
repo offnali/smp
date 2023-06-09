@@ -6,15 +6,20 @@ def most_requests(data):
     request_times = []
 
     for item in data:
+        # Haal de aanvraagtijd op uit het item
         request_time = item["_source"]["layers"]["frame"]["frame.time"]
+        # Rond de tijd af naar het dichtstbijzijnde gehele getal
         rounded_time = request_time.split('.')[0]
         request_times.append(rounded_time)
 
+    # Tel het aantal voorkomens van elke afgeronde tijd
     request_counts = Counter(request_times)
+    # Sorteer de tijden op basis van hun frequentie, van hoog naar laag
     sorted_request_counts = request_counts.most_common(10)
 
     result = ["The 10 most requested times:"]
     for time, count in sorted_request_counts:
+        # Voeg de tijd en het aantal toe aan het resultaat
         result.append(f"Time: {time}, Count: {count}")
 
     return result
@@ -26,19 +31,25 @@ def amount_of_hosts(data, university_network_ip):
     external_hosts = set()
 
     for item in data:
+        # Haal de bron- en bestemmings-IP op uit het item
         ip_src = item["_source"]["layers"]["ip"]["ip.src"]
         ip_dst = item["_source"]["layers"]["ip"]["ip.dst"]
 
         if university_network_ip in ip_src:
+            # Voeg het bron-IP toe aan de set van universitaire hosts
             university_hosts.add(ip_src)
         else:
+            # Voeg het bron-IP toe aan de set van externe hosts
             external_hosts.add(ip_src)
 
         if university_network_ip in ip_dst:
+            # Voeg het bestemmings-IP toe aan de set van universitaire hosts
             university_hosts.add(ip_dst)
         else:
+            # Voeg het bestemmings-IP toe aan de set van externe hosts
             external_hosts.add(ip_dst)
 
+    # Tel het aantal unieke universitaire hosts en externe hosts
     university_hosts_count = len(university_hosts)
     external_hosts_count = len(external_hosts)
 
@@ -57,12 +68,16 @@ def synflood_scan(data):
             source_ip = item["_source"]["layers"]["ip"]["ip.src"]
 
             if int(flags, 16) & 0x02:
+                # Voeg het item toe aan de lijst van SYN-pakketten
                 syn_packets.append(item)
+                # Voeg het bron-IP toe aan de lijst van bron-IP's
                 source_ips.append(source_ip)
 
             if not (int(flags, 16) & 0x10):
+                # Voeg het bron-IP toe aan de lijst van incomplete handshakes
                 incomplete_handshakes.append(source_ip)
 
+    # Tel het aantal voorkomens van elk bron-IP en incomplete handshake
     ip_counts = Counter(source_ips)
     incomplete_counts = Counter(incomplete_handshakes)
 
@@ -71,6 +86,7 @@ def synflood_scan(data):
 
     for ip, count in ip_counts.items():
         if count > threshold:
+            # Voeg het bron-IP toe aan de lijst van potentieel kwaadwillende IP's
             potentially_malicious_ips.append(ip)
 
     print("Potentially malicious source IP addresses with a significant increase in SYN packets:")
@@ -124,4 +140,4 @@ if __name__ == "__main__":
     if args.synflood_scan:
         options.append("synflood_scan")
 
-    main(args.dataset, options, args.university_network_ip) 
+    main(args.dataset, options, args.university_network_ip)

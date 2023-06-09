@@ -45,6 +45,11 @@ You can choose one or more options to run multiple analyses simultaneously.
 
 - python network_analyzer.py -ds dataset.json -ss
 
+## Map Structure
+
+
+
+
 ## License
 
 This network analyzer is released under the MIT License.
@@ -52,3 +57,4 @@ This network analyzer is released under the MIT License.
 Feel free to adjust the wording as needed for your specific context.
 
 Let me know if there's anything else I can assist you with!
+
