@@ -18,7 +18,7 @@ Het werkt als volgt:
 
 - Het resultaat wordt geretourneerd als een lijst met strings in het volgende formaat:
 
-    "Time: [tijd], Count: [aantal verzoeken]"
+-    "Time: [tijd], Count: [aantal verzoeken]"
 
 ## Deelvraag 2
 
@@ -38,9 +38,9 @@ Het werkt als volgt:
 
 - Het resultaat wordt afgedrukt met behulp van print()-statements in het volgende formaat:
 
-    "Number of different hosts communicating with the webserver:"
-    "From the university network: [aantal universitaire hosts]"
-    "From external sources: [aantal externe hosts]"
+-    "Number of different hosts communicating with the webserver:"
+-    "From the university network: [aantal universitaire hosts]"
+-    "From external sources: [aantal externe hosts]"
 
 ## Deelvraag 3
 
@@ -63,6 +63,7 @@ Het werkt als volgt:
 - Het algoritme identificeert potentieel kwaadwillende IP-adressen door te controleren welke bron-IP's meer voorkomen dan een vooraf gedefinieerde drempelwaarde (threshold).
 - Het resultaat wordt afgedrukt met behulp van print()-statements in het volgende formaat:
 
-    "Potentially malicious source IP addresses with a significant increase in SYN packets:"
-    "IP: [bron-IP] | Total SYN Requests: [aantal SYN-verzoeken] | Total Incomplete SYN Requests: [aantal incomplete handshakes]"
-    Er worden ook de top 5 van incomplete handshakes afgedrukt met het aantal keren dat ze voorkomen.
+-    "Potentially malicious source IP addresses with a significant increase in SYN packets:"
+-    "IP: [bron-IP] | Total SYN Requests: [aantal SYN-verzoeken] | Total Incomplete SYN Requests: [aantal incomplete handshakes]"
+
+-    Er worden ook de top 5 van incomplete handshakes afgedrukt met het aantal keren dat ze voorkomen.
