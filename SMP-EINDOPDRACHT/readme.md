@@ -47,7 +47,20 @@ You can choose one or more options to run multiple analyses simultaneously.
 
 ## Map Structure
 
-
+SMP-EINDOPDRACHT:.
+│   readme.md
+│   requirements.txt
+│
+├───docs
+│       subquestions.md
+│
+├───smpnc
+│       networkanalyzer.py
+│       smpdataset.json
+│
+└───tests
+        negative_most_requests_test.py
+        positive_most_requests_test.py
 
 
 ## License
