@@ -1,4 +1,4 @@
-from smpnc.networkanalyzer import most_requests
+from smpnc.networkanalyzer import MostRequestsAnalyzer
 
 def test_most_requests():
     data = [
@@ -18,6 +18,7 @@ def test_most_requests():
         "Time: Jan  5, 1970 03:48:31, Count: 3"
     ]
 
-    result = most_requests(data)
+    analyzer = MostRequestsAnalyzer(data)
+    result = analyzer.analyze()
 
     assert result == expected_result
