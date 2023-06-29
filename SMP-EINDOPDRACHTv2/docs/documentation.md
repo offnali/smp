@@ -6,7 +6,7 @@ import json
 from collections import Counter
 import argparse
 
-<!--De modules hierboven zijn essentieel voor de werking van de Network Analyzer.-->
+`De modules hierboven zijn essentieel voor de werking van de Network Analyzer.`
 
 
 class MostRequestsAnalyzer:
