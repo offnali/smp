@@ -10,13 +10,22 @@ import argparse
 
 - De modules hierboven zijn essentieel voor de werking van de Network Analyzer.
 
+## Functie Most Requests
+
+- De functie Most requests print de top 10 meeste requests die worden gedaan met een interval van 1 seconde.
+
 ```py
 class MostRequestsAnalyzer:
     def __init__(self, data):
         self.data = data
-
+```
+- Deze regels definiëren een klasse genaamd MostRequestsAnalyzer die verantwoordelijk is voor het analyseren van de meest aangevraagde tijden.
+```py
     def analyze(self):
         request_times = []
+```
+- De __init__-methode wordt gebruikt als een constructor voor de klasse en initialiseert een instantie van de klasse met de gegeven data.
+```py
 
         for item in self.data:
             # Haal de aanvraagtijd op uit het item
@@ -36,6 +45,8 @@ class MostRequestsAnalyzer:
             result.append(f"Time: {time}, Count: {count}")
 
         return result
+```
+
 
 
 
