@@ -107,7 +107,9 @@ class AmountOfHostsAnalyzer:
 - Het uiteindelijke resultaat wordt geretourneerd als een lijst, waarin de informatie over het aantal verschillende hosts die communiceren met de webserver wordt weergegeven. Het resultaat bevat het aantal hosts vanuit het universitaire netwerk en het aantal hosts van externe bronnen.
 
 
-## Functie Amount of Hosts
+## Functie Synflood Scan
+
+- De functie Synflood Scan scant print de hosts die verdacht worden op een synflood attack. eerst wordt de ip geprint die de meeste syn requests verzoekt ongeacht of de 3-way handshake afgerond wordt. vervolgens wordt de top 5 ip's geprint met de aantal niet afgemaakte tcp sessie.
 
 ```py
 class SynfloodScanAnalyzer:
