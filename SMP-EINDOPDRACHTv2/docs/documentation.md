@@ -13,7 +13,7 @@ import argparse
 
 ## Functie Most Requests
 
-- De functie Most requests print de top 10 meeste requests die worden gedaan met een interval van 1 seconde.
+- De functie Most requests print de top 10 meeste requests die worden gedaan op een bepaalde tijd afgerond op secondes.
 
 ```py
 class MostRequestsAnalyzer:
@@ -27,35 +27,29 @@ class MostRequestsAnalyzer:
         request_times = []
 
         for item in self.data:
-            # Haal de aanvraagtijd op uit het item
             request_time = item["_source"]["layers"]["frame"]["frame.time"]
-            # Rond de tijd af naar het dichtstbijzijnde gehele getal
             rounded_time = request_time.split('.')[0]
             request_times.append(rounded_time)
 ```
 - De analyze-methode analyseert de gegevens door een lege lijst request_times aan te maken om de aangevraagde tijden op te slaan. Vervolgens wordt er door elk item in de gegevens gelust en wordt de aanvraagtijd opgehaald uit het item met behulp van de juiste key. De aanvraagtijd wordt afgerond naar het dichtstbijzijnde gehele getal door het te splitsen op het decimaalteken en alleen het gehele deel te behouden. Ten slotte wordt de afgeronde tijd toegevoegd aan de request_times-lijst.
 ```py
-        # Tel het aantal voorkomens van elke afgeronde tijd
         request_counts = Counter(request_times)
-        # Sorteer de tijden op basis van hun frequentie, van hoog naar laag
         sorted_request_counts = request_counts.most_common(10)
 ```
 - In de volgende stap wordt het aantal voorkomens van elke afgeronde tijd geteld met behulp van de Counter-functie. Dit creëert een object dat de tellingen bijhoudt. Vervolgens worden de resultaten van het Counter-object gesorteerd op basis van hun frequentie, waarbij de meest voorkomende tijden eerst worden geplaatst. Om de top 10 meest voorkomende tijden op te halen, wordt de methode most_common(10) gebruikt.
 ```py
         result = ["The 10 most requested times:"]
         for time, count in sorted_request_counts:
-            # Voeg de tijd en het aantal toe aan het resultaat
             result.append(f"Time: {time}, Count: {count}")
 
         return result
 ```
-- Vervolgens wordt een lijst gemaakt met de eerste regel van het resultaat, die de titel bevat. Daarna wordt er een lus uitgevoerd door de gesorteerde resultaten van de meest voorkomende tijden. Voor elke tijd en het bijbehorende aantal wordt een string gemaakt en toegevoegd aan de result-lijst. Uiteindelijk wordt het volledige resultaat, inclusief de titelregel en de regels met tijd en aantal, geretourneerd als output van de methode.
+- Vervolgens wordt een lijst gemaakt met de eerste regel van het resultaat, die de titel bevat. Daarna wordt er een lus uitgevoerd door de gesorteerde resultaten van de meest voorkomende tijden. Voor elke tijd en het bijbehorende aantal wordt een string gemaakt en toegevoegd aan de result-lijst. Uiteindelijk wordt het volledige resultaat, inclusief de titelregel en de regels met tijd en aantal, geretourneerd als output van de methode. Het wordt in een lijst gezet zodat ik de tests kon maken, want ik kon niet achterhalen hoe ik de tests kon maken als ik gebruik maakte van print in plaats van return. De return statements worden ook gebruikt bij de andere 2 functies.
 
 
 ## Functie Amount of Hosts
 
-- De functie Amount of Hosts print hoeveel verbindingen er worden gemaakt van binnen de universiteitsnetwerk en van buiten de universiteitsnetwerk.
-- Dit vereist echter wel de verplicte argument bijvoorbeeld `-uni 192.169.0.1`.
+- De functie Amount of Hosts print hoeveel verbindingen er worden gemaakt van binnen de universiteitsnetwerk en van buiten de universiteitsnetwerk. Dit vereist echter wel de verplicte argument bijvoorbeeld `-uni 192.169.0.1`. zonder de universiteit ip te geven werkt de functie niet omdat deze van belang is voor de functionaliteit.
 
 ```py
 class AmountOfHostsAnalyzer:
@@ -71,29 +65,23 @@ class AmountOfHostsAnalyzer:
         external_hosts = set()
 
         for item in self.data:
-            # Haal de bron- en bestemmings-IP op uit het item
             ip_src = item["_source"]["layers"]["ip"]["ip.src"]
             ip_dst = item["_source"]["layers"]["ip"]["ip.dst"]
 
             if self.university_network_ip in ip_src:
-                # Voeg het bron-IP toe aan de set van universitaire hosts
                 university_hosts.add(ip_src)
             else:
-                # Voeg het bron-IP toe aan de set van externe hosts
                 external_hosts.add(ip_src)
 
             if self.university_network_ip in ip_dst:
-                # Voeg het bestemmings-IP toe aan de set van universitaire hosts
                 university_hosts.add(ip_dst)
             else:
-                # Voeg het bestemmings-IP toe aan de set van externe hosts
                 external_hosts.add(ip_dst)
 ```
 - Vervolgens worden het aantal unieke universitaire hosts en externe hosts geteld door de lengte van de respectievelijke sets te nemen. Het resultaat wordt opgeslagen in een lege lijst genaamd "result". Deze lijst bevat een titelregel en regels met het aantal hosts per type.
 
 ```py
 
-        # Tel het aantal unieke universitaire hosts en externe hosts
         university_hosts_count = len(university_hosts)
         external_hosts_count = len(external_hosts)
 
@@ -109,7 +97,7 @@ class AmountOfHostsAnalyzer:
 
 ## Functie Synflood Scan
 
-- De functie Synflood Scan scant print de hosts die verdacht worden op een synflood attack. eerst wordt de ip geprint die de meeste syn requests verzoekt ongeacht of de 3-way handshake afgerond wordt. vervolgens wordt de top 5 ip's geprint met de aantal niet afgemaakte tcp sessie.
+- De functie Synflood Scan scant print de hosts die verdacht worden op een synflood attack. Eerst wordt de ip geprint die de meeste syn requests verzoekt ongeacht of de 3-way handshake afgerond wordt. Vervolgens wordt de top 5 ip's geprint met de aantal niet afgemaakte tcp sessie.
 
 ```py
 class SynfloodScanAnalyzer:
@@ -130,18 +118,14 @@ class SynfloodScanAnalyzer:
                 source_ip = item["_source"]["layers"]["ip"]["ip.src"]
 
                 if int(flags, 16) & 0x02:
-                    # Voeg het item toe aan de lijst van SYN-pakketten
                     syn_packets.append(item)
-                    # Voeg het bron-IP toe aan de lijst van bron-IP's
                     source_ips.append(source_ip)
 
                 if not (int(flags, 16) & 0x10):
-                    # Voeg het bron-IP toe aan de lijst van incomplete handshakes
                     incomplete_handshakes.append(source_ip)
 ```
 - De analyze-methode analyseert de gegevens door door elk item in de data te loopen, controleert of het item een TCP-laag heeft, haalt de vlaggen en het bron-IP op, en voegt het item toe aan de lijst syn_packets en het bron-IP aan de lijst source_ips als de SYN-vlag aanwezig is (0x02), en voegt het bron-IP toe aan de lijst incomplete_handshakes als de ACK-vlag niet aanwezig is (0x10).
 ```py
-        # Tel het aantal voorkomens van elk bron-IP en incomplete handshake
         ip_counts = Counter(source_ips)
         incomplete_counts = Counter(incomplete_handshakes)
 
@@ -150,7 +134,6 @@ class SynfloodScanAnalyzer:
 
         for ip, count in ip_counts.items():
             if count > threshold:
-                # Voeg het bron-IP toe aan de lijst van potentieel kwaadwillende IP's
                 potentially_malicious_ips.append(ip)
 ```
 - Met behulp van de Counter-functie worden de aantallen van elk bron-IP en onvolledige handshake geteld. Een lijst potentially_malicious_ips wordt aangemaakt om potentieel kwaadwillende IP-adressen op te slaan. Een drempelwaarde van 100 wordt ingesteld. Vervolgens wordt er gelust door de bron-IP's en hun bijbehorende tellingen in het ip_counts-object, waarbij IP-adressen die vaker voorkomen dan de drempelwaarde worden toegevoegd aan de lijst potentially_malicious_ips.
